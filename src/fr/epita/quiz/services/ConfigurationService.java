@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class ConfigurationService {
 
 	private static ConfigurationService instance;
@@ -13,7 +18,9 @@ public class ConfigurationService {
 	
 	Properties props = new Properties();
 	boolean init = false;
-	
+	/**
+	 * Configuration of the data base
+	 */
 	private ConfigurationService() {
 		// properties loading
 		try {
@@ -26,7 +33,10 @@ public class ConfigurationService {
 		}
 
 	}
-
+/**
+ * 
+ * @returns ConfigurationService instance
+ */
 	public static ConfigurationService getInstance() {
 		if (instance == null) {
 			instance = new ConfigurationService();
@@ -38,11 +48,22 @@ public class ConfigurationService {
 		return init;
 	}
 
-
+/**
+ * gets ConfigurationValue
+ * @param key
+ * @param defaultValue
+ * @return property value
+ */
 
 	public String getConfigurationValue(String key, String defaultValue) {
 		return props.getProperty(key, defaultValue);
 	}
+/**
+ * 
+ * @param key
+ * @param defaultValue
+ * @return Property 
+ */
 	public String getConfigurationValue(ConfigEntry key, String defaultValue) {
 		return props.getProperty(key.getKey(), defaultValue);
 	}

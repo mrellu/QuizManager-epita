@@ -1,5 +1,9 @@
 package fr.epita.quiz.services;
-
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public enum ConfigEntry {
 	
 	DB_QUERIES_QUIZ_SEARCHQUERY("db.queries.quiz.searchQuery"),

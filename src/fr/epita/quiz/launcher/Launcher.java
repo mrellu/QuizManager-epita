@@ -3,7 +3,11 @@ package fr.epita.quiz.launcher;
 import java.util.Scanner;
 
 import fr.epita.quiz.exception.CreateFailedException;
-
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class Launcher {
 
 	private static Scanner sc;

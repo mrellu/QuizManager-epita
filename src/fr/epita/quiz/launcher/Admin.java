@@ -9,6 +9,11 @@ import fr.epita.quiz.datamodel.Quiz;
 import fr.epita.quiz.exception.CreateFailedException;
 import fr.epita.quiz.services.data.QuizJDBCDAO;
 
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class Admin {
 
 	private static  String LOGIN = "ADM";
@@ -16,7 +21,11 @@ public class Admin {
 	private static QuizJDBCDAO daoData = QuizJDBCDAO.getInstance();
 	private static String topic;
 	private static Scanner scanner;
-
+	private static int qid;
+/**
+ * Constructor for Admin
+ * @throws CreateFailedException
+ */
 	public  Admin() throws CreateFailedException {
 
 		Scanner scanner = new Scanner(System.in);
@@ -59,7 +68,10 @@ public class Admin {
 		scanner.close();
 
 	}
-
+/**
+ * 
+ * @param sc
+ */
 	private static void searchQstn(Scanner sc) {
 		
 		System.out.println("Welcome to Search a Question");
@@ -129,7 +141,11 @@ public class Admin {
 	      }
 		System.out.println("Select Quiz Title ? :");
 		String id = sc.nextLine();
-		System.out.println("Welcome to create a Question");
+		System.out.println("\nSelect the type of question 1.Open Question\n2.Multiple Answer");
+		qid = Integer.parseInt(sc.nextLine());
+		if(qid==2) {
+		
+		System.out.println("Welcome to create a Multiple Question");
 		System.out.println("Enter Question: ");
 		String question = sc.nextLine();
 		System.out.println("Enter Topic: ");
@@ -162,6 +178,35 @@ public class Admin {
 		if(isExec) {
 			System.out.println("Question and Answers are created Successfully.");
 		}
+		}
+		else if(qid==1) {
+			System.out.println("Welcome to create a Open Question");
+			System.out.println("Enter Question: ");
+			String question = sc.nextLine();
+			System.out.println("Enter Topic: ");
+			String topic = sc.nextLine();
+			System.out.println("Enter Difficulty: ");
+			String diff = sc.nextLine();
+			System.out.println("Enter Hint: ");
+			String hint = sc.nextLine();
+			System.out.println("Enter Actual right Answer: ");
+			String cAns = sc.nextLine();
+			
+			HashMap<String, String> quesMap = new HashMap<String, String>();
+			quesMap.put("id", id);
+			quesMap.put("question", question);
+			quesMap.put("topic", topic);
+			quesMap.put("diff", diff);
+			quesMap.put("optD", hint);
+			quesMap.put("cAns", cAns);
+			
+			isExec = daoData.createOpenQuestion(quesMap);
+			if(isExec) {
+				System.out.println("Question and Answers are created Successfully.");
+			}
+			
+		}
+			
 
 
 	}

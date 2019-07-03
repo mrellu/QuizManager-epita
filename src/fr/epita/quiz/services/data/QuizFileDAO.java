@@ -12,11 +12,21 @@ import fr.epita.quiz.datamodel.Quiz;
 import fr.epita.quiz.exception.CreateFailedException;
 import fr.epita.quiz.exception.SearchFailedException;
 
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class QuizFileDAO {
 
 	
 	private File file;
 
+/**
+ * QuizFileDAOFile
+ * @param file
+ * @throws IOException
+ */
 	public QuizFileDAO(File file) throws IOException {
 		
 		if (!file.exists()) {
@@ -26,7 +36,11 @@ public class QuizFileDAO {
 		this.file = file;
 	}
 	
-
+/**
+ * Create quiz
+ * @param quiz
+ * @throws CreateFailedException
+ */
 	public void create(Quiz quiz) throws CreateFailedException{
 		
 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -51,7 +65,12 @@ public class QuizFileDAO {
 		return null;
 
 	}
-
+/**
+ * Search  
+ * @param quizCriterion
+ * @return
+ * @throws SearchFailedException
+ */
 	public List<Quiz> search(Quiz quizCriterion) throws SearchFailedException {
 		List<Quiz> resultList = new ArrayList<>();
 		try (Scanner scanner = new Scanner(file)) {
@@ -69,13 +88,7 @@ public class QuizFileDAO {
 		} catch (FileNotFoundException e) {
 			throw new SearchFailedException(quizCriterion, e);
 		}
-		
-		
-		// 	compare to the criterion
-		//  if it is correct then put it in the result list
-		
-		// return the result list
-		
+			
 		return resultList;
 	}
 

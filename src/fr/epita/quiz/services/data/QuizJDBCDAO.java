@@ -17,6 +17,11 @@ import fr.epita.quiz.exception.SearchFailedException;
 import fr.epita.quiz.services.ConfigEntry;
 import fr.epita.quiz.services.ConfigurationService;
 
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class QuizJDBCDAO {
 
 	private static QuizJDBCDAO instance;
@@ -37,14 +42,21 @@ public class QuizJDBCDAO {
 	private QuizJDBCDAO() {
 
 	}
-
+/**
+ *
+ * @return
+ */
 	public static QuizJDBCDAO getInstance() {
 		if (instance == null) {
 			instance = new QuizJDBCDAO();
 		}
 		return instance;
 	}
-
+/**
+ * 
+ * @return
+ * @throws SQLException
+ */
 	private Connection getConnection() throws SQLException {
 		ConfigurationService conf = ConfigurationService.getInstance();
 		String username = conf.getConfigurationValue("db.username", "");
@@ -76,7 +88,10 @@ public class QuizJDBCDAO {
 		return var;
 
 	}
-
+/**
+ * updates the Quiz
+ * @param quiz
+ */
 	public void update(Quiz quiz) {
 		try (Connection connection = getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(UPDATE_QUERY);) {
@@ -88,6 +103,10 @@ public class QuizJDBCDAO {
 
 	}
 
+/**
+ * deletes the Quiz	
+ * @param quiz
+ */
 	public void delete(Quiz quiz) {
 		try (Connection connection = getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(DELETE_QUERY);) {
@@ -97,11 +116,20 @@ public class QuizJDBCDAO {
 		}
 	}
 
+/**
+ * 	
+ * @param id
+ * @return
+ */
 	public Quiz getById(int id) {
 		return null;
-
 	}
 
+/**
+ * 
+ * @param user
+ * @return
+ */
 	public String selectUser(String user) {
 		String pass = "";
 		Connection connection;
@@ -119,6 +147,12 @@ public class QuizJDBCDAO {
 		return pass;
 	}
 
+	/**
+	 * Search Quiz
+	 * @param quizCriterion
+	 * @return
+	 * @throws SearchFailedException
+	 */
 	public List<Quiz> search(Quiz quizCriterion) throws SearchFailedException {
 		String searchQuery = ConfigurationService.getInstance()
 				.getConfigurationValue(ConfigEntry.DB_QUERIES_QUIZ_SEARCHQUERY, "");
@@ -146,6 +180,11 @@ public class QuizJDBCDAO {
 		return quizList;
 	}
 
+	/**
+	 * Create Questions
+	 * @param quesMap
+	 * @return
+	 */
 	public boolean createQuestion(HashMap<String, String> quesMap) {
 		boolean isExec = false;
 		Connection connection;
@@ -166,7 +205,36 @@ public class QuizJDBCDAO {
 		}
 		return isExec;
 	}
+	
+	/**
+	 * Create Open Question
+	 * @param quesMap
+	 * @return
+	 */
+	public boolean createOpenQuestion(HashMap<String, String> quesMap) {
+		boolean isExec = false;
+		Connection connection;
+		try {
+			connection = getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(INSERT_QUES);
+			pstmt.setInt(1, Integer.parseInt(quesMap.get("id")));
+			pstmt.setString(2, quesMap.get("question"));
+			pstmt.setString(3, quesMap.get("topic"));
+			pstmt.setInt(4, Integer.parseInt(quesMap.get("diff")));
+			pstmt.execute();
 
+			createAns(quesMap);
+			isExec = true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isExec;
+	}
+/**
+ * Creates Answer
+ * @param quesMap
+ */
 	private void createAns(HashMap<String, String> quesMap) {
 		Connection connection;
 		try {
@@ -185,6 +253,11 @@ public class QuizJDBCDAO {
 		}
 	}
 
+	/**
+	 * Selects Questions
+	 * @param opt
+	 * @return
+	 */
 	public List<Answer> selectQues(int opt) {
 		Connection connection;
 		List<Answer> ansList = new ArrayList<Answer>();
@@ -209,6 +282,10 @@ public class QuizJDBCDAO {
 		return ansList;
 	}
 
+	/**
+	 * Gets the 
+	 * @return
+	 */
 	public List<Quiz> getQuiz() {
 		List<Quiz> qList = new ArrayList<>();
 		try {

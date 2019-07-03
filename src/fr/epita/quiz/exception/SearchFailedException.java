@@ -1,5 +1,9 @@
 package fr.epita.quiz.exception;
-
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class SearchFailedException extends DataAccessException {
 
 	/**

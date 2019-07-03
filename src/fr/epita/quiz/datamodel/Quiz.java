@@ -1,5 +1,10 @@
 package fr.epita.quiz.datamodel;
 
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class Quiz {
 
 	

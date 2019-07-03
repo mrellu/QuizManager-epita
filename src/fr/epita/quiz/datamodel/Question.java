@@ -1,7 +1,11 @@
 package fr.epita.quiz.datamodel;
 
 import java.util.Arrays;
-
+/**
+ * 
+ * @author mahesh
+ *
+ */
 public class Question {
 	
 	private String content;
